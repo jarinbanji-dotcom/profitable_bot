@@ -102,6 +102,40 @@ def place_buy_order(symbol, buy_qty):
 
 
 
-place_buy_order("USDCUSDT", buy_qty=7)
+#place_buy_order("USDCUSDT", buy_qty=7)
+
+def buy_with_3_percent_buffer(symbol):
+    # 1. Fetch current price via REST (Fastest for one-time use)
+    ticker = session.get_tickers(category="spot", symbol=symbol)
+
+    if ticker['retCode'] == 0 and ticker['result']['list']:
+        last_price = float(ticker['result']['list'][0]['lastPrice'])
+        print(last_price)
+        """
+        # 2. Add 3% buffer for the Limit Order
+        limit_price = round(last_price * 1.03, 6)
+
+        print(f"Market: {last_price} | Placing Limit Buy at: {limit_price}")
+
+        # 3. Place the order
+        return session.place_order(
+            category="spot",
+            symbol=symbol,
+            side="Buy",
+            orderType="Limit",
+            qty=qty,
+            price=str(limit_price),
+            timeInForce="IOC"  # Immediate or Cancel (best for 'aggressive' entries)
+        )
+        """
+    return "Error fetching price"
+
+
+# Usage
+st=time.time()
+buy_with_3_percent_buffer("AZTECUSDT")
+en=time.time()
+print("time to fetch last traded price is : ",en-st)
+
 
 #place_tp_order("2153135979010202624",0.05,"USDCUSDT")
