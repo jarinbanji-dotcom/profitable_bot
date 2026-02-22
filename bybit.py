@@ -182,7 +182,7 @@ def place_aggressive_spot_buy(symbol, usdt_amount):
     # If RatioX is 0.05, we use 0.04 for safety
     ratio_x = float(rules['riskParameters']['priceLimitRatioX'])
     print("x ratio : ",ratio_x)
-    safe_ratio = ratio_x - 0.01
+    safe_ratio = ratio_x*0.9
     print("safe_ratio : ",safe_ratio)
 
     # 3. Calculate Target Price (Market + 4%)
@@ -218,7 +218,7 @@ def place_aggressive_spot_buy(symbol, usdt_amount):
     """
 
 st=time.time()
-place_aggressive_spot_buy("AZTECUSDT",8)
+place_aggressive_spot_buy("SENTUSDT",8)
 en=time.time()
 print("time taken :",en-st)
 
