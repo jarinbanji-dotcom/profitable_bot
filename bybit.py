@@ -218,7 +218,7 @@ def place_aggressive_spot_buy(symbol, usdt_amount):
     """
 
 st=time.time()
-place_aggressive_spot_buy("SENTUSDT",8)
+place_aggressive_spot_buy("USDCUSDT",8)
 en=time.time()
 print("time taken :",en-st)
 
@@ -269,3 +269,4 @@ print("step size : ", price_tick)
 print("qty step", qty_step)
 print("tp price : ", tp_price_raw)
 """
+
