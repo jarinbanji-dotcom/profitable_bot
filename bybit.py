@@ -205,7 +205,7 @@ def place_aggressive_spot_buy(symbol, usdt_amount):
     print(f"Sending Limit Buy: {qty} @ {final_buy_price} (Buffer: {safe_ratio * 100}%)")
 
     # 6. Execute with IOC (Immediate or Cancel)
-    """
+
     return session.place_order(
         category="spot",
         symbol=symbol,
@@ -215,10 +215,10 @@ def place_aggressive_spot_buy(symbol, usdt_amount):
         price=str(final_buy_price),
         timeInForce="IOC"
     )
-    """
+
 
 st=time.time()
-place_aggressive_spot_buy("USDCUSDT",8)
+print(place_aggressive_spot_buy("USDCUSDT",8))
 en=time.time()
 print("time taken :",en-st)
 
@@ -269,4 +269,3 @@ print("step size : ", price_tick)
 print("qty step", qty_step)
 print("tp price : ", tp_price_raw)
 """
-
