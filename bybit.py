@@ -155,24 +155,39 @@ def buy_with_3_percent_buffer(symbol):
 
 
 # Usage
-st=time.time()
-buy_with_3_percent_buffer("AZTECUSDT")
-en=time.time()
-print(en-st)
+
 
 import decimal
+
+import concurrent.futures
+
+
+def fetch_data(symbol):
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        # Fire both requests simultaneously
+        future_ticker = executor.submit(session.get_tickers, category="spot", symbol=symbol)
+        future_instr = executor.submit(session.get_instruments_info, category="spot", symbol=symbol)
+
+        # Get results as they finish
+        ticker_data = future_ticker.result()
+        instr_data = future_instr.result()
+
+    return ticker_data, instr_data
+
 
 
 def place_aggressive_spot_buy(symbol, usdt_amount):
     # 1. Get Market Price & Instrument Rules
     st=time.time()
-    ticker = session.get_tickers(category="spot", symbol=symbol)
-    en1=time.time()
-    print("ticker time : ",en1-st)
-    
-    instr = session.get_instruments_info(category="spot", symbol=symbol)
-    en2=time.time()
-    print("instr :",en2-en1)
+    data=fetch_data(symbol)
+    en=time.time()
+
+    print("fetch data is : ",en-st)
+
+    ticker = data[0]
+
+    instr = data[1]
+
 
     last_price = float(ticker['result']['list'][0]['lastPrice'])
     print(last_price)
