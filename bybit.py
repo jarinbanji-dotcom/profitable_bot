@@ -9,9 +9,9 @@ PROXY_IP = "45.38.107.97"
 PROXY_PORT = "6014"
 #6540,6543,6837,6754,6114 , 6641,6014=6461=6462 ,
 
-#6014 : 45.38.107.97 (0.2s)
-# 6461 : 194.39.32.164 (0.2s)
-# 6462 : 198.105.121.200 (0.3s)
+#6014 : 45.38.107.97 (0.25s)
+# 6461 : 194.39.32.164 (0.35s)
+# 6462 : 198.105.121.200 (0.45s)
 #
 # 2. Create the proxy dictionary
 proxy_url = f"http://{PROXY_USER}:{PROXY_PASS}@{PROXY_IP}:{PROXY_PORT}"
@@ -43,4 +43,5 @@ for i in range(20):
     print(fast_fetch())
     en=time.time()
     print(en-st)
+
 
