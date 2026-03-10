@@ -1,4 +1,5 @@
 from curl_cffi import requests
+import time
 
 # 1. REPLACE THESE WITH YOUR WEBSHARE DETAILS
 PROXY_USER = "mgqvrbgh"
@@ -53,4 +54,11 @@ def fetch_data():
 
 
 if __name__ == "__main__":
-    fetch_data()
+    for i in range(2):
+        st=time.time()
+        fetch_data()
+        en=time.time()
+        print(en-st)
+    
+    
+
