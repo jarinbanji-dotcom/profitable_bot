@@ -1,43 +1,56 @@
 from curl_cffi import requests
-import json
 
-# The exact URL from your network log
-url = "https://api-manager.upbit.com/api/v1/announcements?os=web&page=1&per_page=20&category=all"
+# 1. REPLACE THESE WITH YOUR WEBSHARE DETAILS
+PROXY_USER = "mgqvrbgh"
+PROXY_PASS = "62lgg39b7a42"
+PROXY_IP = "31.59.20.176"
+PROXY_PORT = "6754"
 
-# Transcribed headers from your browser log
+# 2. Create the proxy dictionary
+proxy_url = f"http://{PROXY_USER}:{PROXY_PASS}@{PROXY_IP}:{PROXY_PORT}"
+print(proxy_url)
+
+proxies = {
+    "http": proxy_url,
+    "https": proxy_url
+}
+
+# 3. The API URL you found in the Network tab
+url = "https://api-manager.upbit.com/api/v1/announcements?os=web&page=1&per_page=1&category=all"
+
+# 4. Use the headers you provided earlier
 headers = {
     "authority": "api-manager.upbit.com",
     "accept": "application/json",
-    "accept-language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
     "origin": "https://upbit.com",
-    "referer": "https://upbit.com/",
-    "sec-ch-ua": '"Not:A-Brand";v="99", "Google Chrome";v="145", "Chromium";v="145"',
-    "sec-ch-ua-mobile": "?0",
+    "referer": "https://upbit.com",
     "sec-ch-ua-platform": '"Windows"',
-    "sec-fetch-dest": "empty",
-    "sec-fetch-mode": "cors",
-    "sec-fetch-site": "same-site",
     "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
 }
 
 
-def get_upbit_announcements():
+def fetch_data():
     try:
-        # impersonate="chrome" is crucial to bypass Cloudflare
-        response = requests.get(url, headers=headers, impersonate="chrome")
+        # We use impersonate="chrome" + our proxies
+        response = requests.get(
+            url,
+            headers=headers,
+            proxies=proxies,
+            impersonate="chrome",
+        )
 
         if response.status_code == 200:
-            data = response.json()
-            print(data)
-            # Navigate to the list of announcements
-
+            print("Success! Data received:")
+            print(response.json())
         else:
-            print(f"Error Code: {response.status_code}")
-            print("Response:", response.text)
+            print(f"Failed with status: {response.status_code}")
+            # If still 403, Cloudflare is blocking the Webshare Data Center IP
+            if response.status_code == 403:
+                print("Cloudflare is still blocking this specific proxy IP.")
 
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"Connection Error: {e}")
 
 
 if __name__ == "__main__":
-    get_upbit_announcements()
+    fetch_data()
