@@ -1,4 +1,3 @@
-flask
-torch
-transformers
-Pillow
+curl_cffi
+pybit
+
