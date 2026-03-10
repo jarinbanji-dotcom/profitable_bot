@@ -1,12 +1,18 @@
-from curl_cffi import requests
 import time
+
+from curl_cffi import requests
 
 # 1. REPLACE THESE WITH YOUR WEBSHARE DETAILS
 PROXY_USER = "mgqvrbgh"
 PROXY_PASS = "62lgg39b7a42"
-PROXY_IP = "31.59.20.176"
-PROXY_PORT = "6754"
+PROXY_IP = "45.38.107.97"
+PROXY_PORT = "6014"
+#6540,6543,6837,6754,6114 , 6641,6014=6461=6462 ,
 
+#6014 : 45.38.107.97 (0.2s)
+# 6461 : 194.39.32.164 (0.2s)
+# 6462 : 198.105.121.200 (0.3s)
+#
 # 2. Create the proxy dictionary
 proxy_url = f"http://{PROXY_USER}:{PROXY_PASS}@{PROXY_IP}:{PROXY_PORT}"
 print(proxy_url)
@@ -18,50 +24,22 @@ proxies = {
 
 # 3. The API URL you found in the Network tab
 url = "https://api-manager.upbit.com/api/v1/announcements?os=web&page=1&per_page=1&category=all"
+from curl_cffi import requests
 
-# 4. Use the headers you provided earlier
-headers = {
-    "authority": "api-manager.upbit.com",
-    "accept": "application/json",
-    "origin": "https://upbit.com",
-    "referer": "https://upbit.com",
-    "sec-ch-ua-platform": '"Windows"',
-    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
-}
+# Create a session once at the start of your bot
+session = requests.Session()
+session.proxies = {"http": proxy_url, "https": proxy_url}
 
-
-def fetch_data():
-    try:
-        # We use impersonate="chrome" + our proxies
-        response = requests.get(
-            url,
-            headers=headers,
-            proxies=proxies,
-            impersonate="chrome",
-        )
-
-        if response.status_code == 200:
-            print("Success! Data received:")
-            print(response.json())
-        else:
-            print(f"Failed with status: {response.status_code}")
-            # If still 403, Cloudflare is blocking the Webshare Data Center IP
-            if response.status_code == 403:
-                print("Cloudflare is still blocking this specific proxy IP.")
-
-    except Exception as e:
-        print(f"Connection Error: {e}")
+def fast_fetch():
+    # Subsequent calls using the same session are MUCH faster
+    # because the TLS handshake is already done.
+    response = session.get(url, impersonate="chrome")
+    return response.json()
 
 
-if __name__ == "__main__":
-    for i in range(20):
-        time.sleep(1)
-        st=time.time()
-        fetch_data()
-        en=time.time()
-        print(en-st)
-    
-    
-
-
-
+for i in range(20):
+    time.sleep(0.1)
+    st=time.time()
+    print(fast_fetch())
+    en=time.time()
+    print(en-st)
