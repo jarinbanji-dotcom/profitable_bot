@@ -78,8 +78,7 @@ while(True):
 
 
 
-    print(last_seen)
+    
 
-    print(title)
+
     en=time.time()
-    print(en-st)
