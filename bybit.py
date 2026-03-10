@@ -38,10 +38,12 @@ def fast_fetch():
 
 
 for i in range(20):
-    time.sleep(0.1)
+    
     st=time.time()
+    time.sleep(0.1)
     print(fast_fetch())
     en=time.time()
     print(en-st)
+
 
 
