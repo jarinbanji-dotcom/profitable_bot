@@ -5,8 +5,8 @@ from curl_cffi import requests
 # 1. REPLACE THESE WITH YOUR WEBSHARE DETAILS
 PROXY_USER = "mgqvrbgh"
 PROXY_PASS = "62lgg39b7a42"
-PROXY_IP = "45.38.107.97"
-PROXY_PORT = "6014"
+PROXY_IP = "194.39.32.164"
+PROXY_PORT = "6461"
 #6540,6543,6837,6754,6114 , 6641,6014=6461=6462 ,
 
 #6014 : 45.38.107.97 (0.2s)
@@ -23,7 +23,7 @@ proxies = {
 }
 
 # 3. The API URL you found in the Network tab
-url = "https://api-manager.upbit.com/api/v1/announcements?os=web&page=1&per_page=1&category=all"
+url = "https://api-manager.upbit.com/api/v1/announcements?os=web&page=1&per_page=1&category=trade"
 from curl_cffi import requests
 
 # Create a session once at the start of your bot
@@ -43,3 +43,4 @@ for i in range(20):
     print(fast_fetch())
     en=time.time()
     print(en-st)
+
