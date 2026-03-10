@@ -55,11 +55,13 @@ def fetch_data():
 
 if __name__ == "__main__":
     for i in range(20):
+        time.sleep(1)
         st=time.time()
         fetch_data()
         en=time.time()
         print(en-st)
     
     
+
 
 
