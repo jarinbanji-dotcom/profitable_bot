@@ -64,7 +64,7 @@ while(True):
     st=time.time()
     res=fast_fetch()
     title=res["data"]["notices"][0]["title"]
-    if("Market Support for" in title and "Termination" not in title):
+    if("Market Support for" in title and "Termination" not in title and "KRW" in title):
 
         
         
@@ -93,6 +93,7 @@ while(True):
 
 
     en=time.time()
+
 
 
 
