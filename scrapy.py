@@ -65,14 +65,16 @@ while(True):
     res=fast_fetch()
     title=res["data"]["notices"][0]["title"]
     if("Market Support for" in title and "Termination" not in title):
-        print("new listing announcement")
+        
         start = title.find("(")
         end = title.find(")")
 
         if start != -1 and end != -1:
             ticker = title[start + 1:end].strip()
-            print(ticker)
+            
             if(ticker not in last_seen):
+                print("new listing announcement")
+                print(ticker)
                 last_seen.append(ticker)
                 
                 connect_bybit(ticker)
@@ -88,4 +90,5 @@ while(True):
 
 
     en=time.time()
+
 
