@@ -194,7 +194,7 @@ def place_aggressive_spot_buy(symbol, usdt_amount):
             orderType="Limit",
             qty=str(qty),
             price=str(final_buy_price),
-            timeInForce="IOC"
+            timeInForce="GTC"
         )
     except Exception as e:
         print("inside exeption")
@@ -219,8 +219,10 @@ def place_aggressive_spot_buy(symbol, usdt_amount):
     st=time.time()
     token=symbol[:-4]
     print(token)
+    time.sleep(0.5)
     token_bal = get_bal(token)
     print(token_bal)
+    
     if(token_bal<0.01):
         raise RuntimeError("Order failed")
     en=time.time()
@@ -287,6 +289,7 @@ print("step size : ", price_tick)
 print("qty step", qty_step)
 print("tp price : ", tp_price_raw)
 """
+
 
 
 
