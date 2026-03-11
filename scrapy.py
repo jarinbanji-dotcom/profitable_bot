@@ -38,7 +38,7 @@ def fast_fetch():
     return response.json()
 
 
-last_seen=["EDGE"]
+last_seen=["EDGE","ICP","SENT","CFG","ESP","SKR","AZTEC","TAO","BIRB"]
 
 def connect_bybit(ticker):
     print("ticker is :", ticker)
@@ -64,7 +64,7 @@ while(True):
     st=time.time()
     res=fast_fetch()
     title=res["data"]["notices"][0]["title"]
-    if("Market Support for" in title and "Termination" not in title and last_seen[0] not in title):
+    if("Market Support for" in title and "Termination" not in title):
         print("new listing announcement")
         start = title.find("(")
         end = title.find(")")
@@ -72,9 +72,15 @@ while(True):
         if start != -1 and end != -1:
             ticker = title[start + 1:end].strip()
             print(ticker)
-            last_seen[0] = ticker
+            if(ticker not in last_seen):
+                last_seen.append(ticker)
+                
+                connect_bybit(ticker)
+                
+                
+            
             #it will connect to bybit
-            connect_bybit(ticker)
+            
 
 
 
@@ -82,3 +88,4 @@ while(True):
 
 
     en=time.time()
+
