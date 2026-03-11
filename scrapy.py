@@ -77,6 +77,7 @@ while(True):
             if(ticker not in last_seen):
                 print("new listing announcement")
                 print(ticker)
+                print("heyya")
                 last_seen.append(ticker)
                 
                 connect_bybit(ticker)
@@ -92,6 +93,7 @@ while(True):
 
 
     en=time.time()
+
 
 
 
