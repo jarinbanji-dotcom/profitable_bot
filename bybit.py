@@ -224,6 +224,11 @@ def place_aggressive_spot_buy(symbol, usdt_amount):
     print(token_bal)
     
     if(token_bal<0.01):
+        response = session.cancel_order(
+            category="spot",
+            symbol=symbol,
+            orderId=orderid
+        )
         raise RuntimeError("Order failed")
     en=time.time()
     print(en-st)
@@ -289,6 +294,7 @@ print("step size : ", price_tick)
 print("qty step", qty_step)
 print("tp price : ", tp_price_raw)
 """
+
 
 
 
