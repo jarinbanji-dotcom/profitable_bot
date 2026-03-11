@@ -50,7 +50,7 @@ def connect_bybit(ticker):
 
     st = time.time()
 
-    for i in range(3):
+    for i in range(7):
         try:
             bybit.place_aggressive_spot_buy(symbol, qty)
             break
@@ -93,6 +93,7 @@ while(True):
 
 
     en=time.time()
+
 
 
 
