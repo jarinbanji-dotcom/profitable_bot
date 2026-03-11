@@ -65,6 +65,8 @@ while(True):
     res=fast_fetch()
     title=res["data"]["notices"][0]["title"]
     if("Market Support for" in title and "Termination" not in title):
+
+        print("hello")
         
         start = title.find("(")
         end = title.find(")")
@@ -90,5 +92,6 @@ while(True):
 
 
     en=time.time()
+
 
 
