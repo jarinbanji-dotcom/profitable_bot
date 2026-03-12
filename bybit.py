@@ -150,7 +150,7 @@ def place_aggressive_spot_buy(symbol, usdt_amount):
     en2=time.time()
     print("instr :",en2-en1)
 
-    last_price = float(ticker['result']['list'][0]['lastPrice'])
+    last_price = float(ticker['result']['list'][0]['usdIndexPrice'])
     print(last_price)
     rules = instr['result']['list'][0]
 
@@ -160,7 +160,7 @@ def place_aggressive_spot_buy(symbol, usdt_amount):
     if(ratio_x>0.05):
         ratio_x=0.05
     print("x ratio : ",ratio_x)
-    safe_ratio = 0.01
+    safe_ratio = ratio_x*0.8
     print("safe_ratio : ",safe_ratio)
 
     # 3. Calculate Target Price (Market + 4%)
@@ -219,7 +219,7 @@ def place_aggressive_spot_buy(symbol, usdt_amount):
     st=time.time()
     token=symbol[:-4]
     print(token)
-    time.sleep(0.5)
+    time.sleep(0.1)
     token_bal = get_bal(token)
     print(token_bal)
     
@@ -233,7 +233,7 @@ def place_aggressive_spot_buy(symbol, usdt_amount):
     en=time.time()
     print(en-st)
 
-    time.sleep(1)
+    time.sleep(0.9)
 
 
 
@@ -294,6 +294,7 @@ print("step size : ", price_tick)
 print("qty step", qty_step)
 print("tp price : ", tp_price_raw)
 """
+
 
 
 
