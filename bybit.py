@@ -38,7 +38,6 @@ def run_session_continously(symbol):
     t2.start()
     t1.join()
     t2.join()
-    print(f"Both fetched in: {time.time()-st:.3f}s")
 
 
 
@@ -325,6 +324,7 @@ print("step size : ", price_tick)
 print("qty step", qty_step)
 print("tp price : ", tp_price_raw)
 """
+
 
 
 
