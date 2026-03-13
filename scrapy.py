@@ -64,8 +64,6 @@ while(True):
     st=time.time()
     res=fast_fetch()
     title=res["data"]["notices"][0]["title"]
-    if(i==2):
-        title="Market Support for (USDC) in KRW,USDT"
     if("Market Support for" in title and "Termination" not in title and "KRW" in title):
         
         start = title.find("(")
@@ -80,7 +78,6 @@ while(True):
                 print("heyya")
                 last_seen.append(ticker)
                 connect_bybit(ticker)
-                break
     elif(i==0):
         bybit.run_session_continously("ETHUSDT")
         i=1
@@ -101,6 +98,7 @@ while(True):
 
 
     en=time.time()
+
 
 
 
