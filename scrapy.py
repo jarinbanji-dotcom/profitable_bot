@@ -80,7 +80,6 @@ while(True):
                 connect_bybit(ticker)
     elif(i==0):
         bybit.run_session_continously("ETHUSDT")
-        print("hi")
         i=1
     elif(i==1):
         i=2
@@ -99,6 +98,7 @@ while(True):
 
 
     en=time.time()
+
 
 
 
