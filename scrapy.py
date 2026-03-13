@@ -83,7 +83,10 @@ while(True):
         print("hi")
         i=1
     elif(i==1):
+        i=2
+    elif(i==2):
         i=0
+        
     
         
                 
@@ -96,6 +99,7 @@ while(True):
 
 
     en=time.time()
+
 
 
 
