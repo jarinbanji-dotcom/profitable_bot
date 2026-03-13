@@ -58,19 +58,17 @@ def connect_bybit(ticker):
             print(f"Attempt {i + 1} failed. Error: {e}")
     en = time.time()
     print("total time taken : ", en - st)
-
+i=0
 while(True):
     time.sleep(0.1)
     st=time.time()
     res=fast_fetch()
     title=res["data"]["notices"][0]["title"]
     if("Market Support for" in title and "Termination" not in title and "KRW" in title):
-
-        
         
         start = title.find("(")
         end = title.find(")")
-
+        
         if start != -1 and end != -1:
             ticker = title[start + 1:end].strip()
             
@@ -79,12 +77,16 @@ while(True):
                 print(ticker)
                 print("heyya")
                 last_seen.append(ticker)
-                
                 connect_bybit(ticker)
-                
+    elif(i==0):
+        print("hi")
+        i=1
+    elif(i==1):
+        i=0
+    
+        
                 
             
-            #it will connect to bybit
             
 
 
@@ -93,6 +95,7 @@ while(True):
 
 
     en=time.time()
+
 
 
 
