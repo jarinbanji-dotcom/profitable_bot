@@ -24,7 +24,7 @@ proxies = {
 }
 
 # 3. The API URL you found in the Network tab
-url = "https://api-manager.upbit.com/api/v1/announcements?os=web&page=1&per_page=1&category=trade"
+url = "https://api-manager.upbit.com/api/v1/announcements?os=web&page=1&per_page=1&category=all"
 from curl_cffi import requests
 
 # Create a session once at the start of your bot
@@ -96,6 +96,7 @@ while(True):
 
 
     en=time.time()
+
 
 
 
