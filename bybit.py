@@ -16,11 +16,13 @@ session = HTTP(
 
 import math
 
+# Results container
+results = {}
+
 def run_session_continously(symbol):
     st = time.time()
 
-    # Results container
-    results = {}
+    
 
     # ── Fetch both in parallel using threads ──
     def fetch_ticker():
@@ -36,8 +38,8 @@ def run_session_continously(symbol):
     t2.start()
     t1.join()
     t2.join()
+    print(f"Both fetched in: {time.time()-st:.3f}s")
 
-    print(f"Both fetched in: {time.time()-st:.3f}s")  
 
 def place_tp_order(order_id, tp_percent, symbol):
     st = time.time()
@@ -163,12 +165,17 @@ def get_new_price(e):
 
 def place_aggressive_spot_buy(symbol, usdt_amount):
     # 1. Get Market Price & Instrument Rules
+
+    run_session_continously(symbol)
+
+    
     st=time.time()
-    ticker = session.get_tickers(category="spot", symbol=symbol)
+    
+    ticker = results['ticker']
     en1=time.time()
     print("ticker time : ",en1-st)
 
-    instr = session.get_instruments_info(category="spot", symbol=symbol)
+    instr = results['instr']
     en2=time.time()
     print("instr :",en2-en1)
 
@@ -316,6 +323,7 @@ print("step size : ", price_tick)
 print("qty step", qty_step)
 print("tp price : ", tp_price_raw)
 """
+
 
 
 
