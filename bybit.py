@@ -1,6 +1,7 @@
 from datetime import datetime, timezone
 import time
 import re
+import threading
 
 from pybit.unified_trading import HTTP
 
@@ -315,6 +316,7 @@ print("step size : ", price_tick)
 print("qty step", qty_step)
 print("tp price : ", tp_price_raw)
 """
+
 
 
 
