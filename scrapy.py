@@ -64,11 +64,8 @@ while(True):
     st=time.time()
     
     res=fast_fetch()
-    en=time.time()
-    print("fetch time is : ",en-st)
     
     title=res["data"]["notices"][0]["title"]
-    print(title)
     if("Market Support for" in title and "Termination" not in title and "KRW" in title):
         
         start = title.find("(")
@@ -87,7 +84,6 @@ while(True):
         st=time.time()
         bybit.run_session_continously("ETHUSDT")
         en=time.time()
-        print(en-st)
         i=1
     elif(i==1):
         i=2
