@@ -8,7 +8,7 @@ PROXY_USER = "wcwfyxnx"
 PROXY_PASS = "lcbzz4s5m706"
 PROXY_IP = "64.137.96.74"
 PROXY_PORT = "6641"
-#6540,6543,6837,6754,6114 , 6641,6014=6461=6462 ,
+#6540,6543,6837,6754,6114 , 6641,6014=6461=6462 , 6641
 
 #6014 : 45.38.107.97 (0.2s)
 # 6461 : 194.39.32.164 (0.2s)
@@ -65,7 +65,6 @@ while(True):
     
     res=fast_fetch()
     en=time.time()
-    print(en-st)
     
     title=res["data"]["notices"][0]["title"]
     if("Market Support for" in title and "Termination" not in title and "KRW" in title):
