@@ -63,6 +63,7 @@ while(True):
     time.sleep(0.1)
     st=time.time()
     res=fast_fetch()
+    print(res)
     title=res["data"]["notices"][0]["title"]
     if("Market Support for" in title and "Termination" not in title and "KRW" in title):
         
@@ -79,7 +80,10 @@ while(True):
                 last_seen.append(ticker)
                 connect_bybit(ticker)
     elif(i==0):
+        st=time.time()
         bybit.run_session_continously("ETHUSDT")
+        en=time.time()
+        print(en-st)
         i=1
     elif(i==1):
         i=2
