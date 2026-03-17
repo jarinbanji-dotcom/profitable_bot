@@ -4,8 +4,8 @@ import bybit
 from curl_cffi import requests
 
 # 1. REPLACE THESE WITH YOUR WEBSHARE DETAILS
-PROXY_USER = "mgqvrbgh"
-PROXY_PASS = "62lgg39b7a42"
+PROXY_USER = "wcwfyxnx"
+PROXY_PASS = "lcbzz4s5m706"
 PROXY_IP = "198.105.121.200"
 PROXY_PORT = "6462"
 #6540,6543,6837,6754,6114 , 6641,6014=6461=6462 ,
@@ -62,9 +62,13 @@ i=0
 while(True):
     time.sleep(0.1)
     st=time.time()
+    
     res=fast_fetch()
-    print(res)
+    en=time.time()
+    print("fetch time is : ",en-st)
+    
     title=res["data"]["notices"][0]["title"]
+    print(title)
     if("Market Support for" in title and "Termination" not in title and "KRW" in title):
         
         start = title.find("(")
