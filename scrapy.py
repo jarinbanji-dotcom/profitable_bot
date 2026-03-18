@@ -85,6 +85,7 @@ while(True):
         st=time.time()
         bybit.run_session_continously("ETHUSDT")
         en=time.time()
+        print(en-st)
         i=1
     elif(i==1):
         i=2
