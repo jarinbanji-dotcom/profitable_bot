@@ -167,10 +167,11 @@ def get_new_price(e):
 def place_aggressive_spot_buy(symbol, usdt_amount):
     # 1. Get Market Price & Instrument Rules
 
+    st=time.time()
+
     run_session_continously(symbol)
 
     
-    st=time.time()
     
     ticker = results['ticker']
     en1=time.time()
@@ -190,7 +191,7 @@ def place_aggressive_spot_buy(symbol, usdt_amount):
     if(ratio_x>0.05):
         ratio_x=0.05
     print("x ratio : ",ratio_x)
-    safe_ratio = ratio_x*0.8
+    safe_ratio = ratio_x*1.2
     print("safe_ratio : ",safe_ratio)
 
     # 3. Calculate Target Price (Market + 4%)
