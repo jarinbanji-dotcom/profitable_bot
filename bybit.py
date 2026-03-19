@@ -224,6 +224,7 @@ def place_aggressive_spot_buy(symbol, usdt_amount):
 
     st=time.time()
     try:
+        print(f"[{datetime.now(timezone.utc)}] above place buy order time")
         buy_order=session.place_order(
             category="spot",
             symbol=symbol,
@@ -235,6 +236,7 @@ def place_aggressive_spot_buy(symbol, usdt_amount):
         )
     except Exception as e:
         print("inside exeption")
+        print(f"[{datetime.now(timezone.utc)}] after buy order get error")
         new_price=get_new_price(e)
         if(new_price):
             final_buy_price = float(decimal.Decimal(str(new_price)).quantize(tick, rounding=decimal.ROUND_DOWN))
