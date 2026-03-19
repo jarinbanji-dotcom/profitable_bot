@@ -38,7 +38,7 @@ def fast_fetch():
     return response.json()
 
 
-last_seen=["EDGE","ICP","SENT","CFG","ESP","SKR","AZTEC","TAO","BIRB"]
+last_seen=["ETHFI","EDGE","ICP","SENT","CFG","ESP","SKR","AZTEC","TAO","BIRB"]
 
 def connect_bybit(ticker):
     print("ticker is :", ticker)
@@ -46,7 +46,7 @@ def connect_bybit(ticker):
     symbol = f"{ticker}USDT"
     print("symbol is :", symbol)
 
-    qty = 7
+    qty = 6
 
     st = time.time()
 
@@ -67,15 +67,20 @@ while(True):
     en=time.time()
     
     title=res["data"]["notices"][0]["title"]
+    
     if("Market Support for" in title and "Termination" not in title and "KRW" in title):
+        
         
         start = title.find("(")
         end = title.find(")")
         
         if start != -1 and end != -1:
+            print(en-st)
             ticker = title[start + 1:end].strip()
             
             if(ticker not in last_seen):
+                print(f"[{datetime.now(timezone.utc)}] new listing")
+                print(f"inside upbit api page listing time : {res["data"]["notices"][0]["listed_at"]}")
                 print("new listing announcement")
                 print(ticker)
                 print("heyya")
