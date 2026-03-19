@@ -21,7 +21,6 @@ results = {}
 
 def run_session_continously(symbol):
     st = time.time()
-    print(f"[{datetime.now(timezone.utc)}] inside fetch ticker and fetch instr")
 
     
 
@@ -172,8 +171,11 @@ def place_aggressive_spot_buy(symbol, usdt_amount):
     # 1. Get Market Price & Instrument Rules
 
     st=time.time()
+    print(f"[{datetime.now(timezone.utc)}] inside buy order")
 
     run_session_continously(symbol)
+    print(f"[{datetime.now(timezone.utc)}] downside of runserssion in buy order")
+
 
     
     
