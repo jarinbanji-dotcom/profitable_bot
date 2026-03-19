@@ -68,7 +68,7 @@ while(True):
     
     title=res["data"]["notices"][0]["title"]
     
-    if("Market Support for" in title and "Termination" not in title and "KRW" in title):
+    if("Market Support for" in title and "Termination" not in title and "USDT" in title):
         
         
         start = title.find("(")
