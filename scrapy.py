@@ -69,7 +69,7 @@ while(True):
     
     title=res["data"]["notices"][0]["title"]
     
-    if("Market Support for" in title and "Termination" not in title and "USDT" in title):
+    if("Market Support for" in title and "Termination" not in title and "KRW" in title):
         
         
         start = title.find("(")
@@ -90,7 +90,6 @@ while(True):
     elif(i==0):
         st=time.time()
         bybit.run_session_continously("ETHUSDT")
-        print(f"[{datetime.now(timezone.utc)}] inside scrapy timmy")
         en=time.time()
         i=1
     elif(i==1):
