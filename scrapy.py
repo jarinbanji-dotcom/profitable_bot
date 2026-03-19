@@ -76,10 +76,10 @@ while(True):
         end = title.find(")")
         
         if start != -1 and end != -1:
-            print(en-st)
             ticker = title[start + 1:end].strip()
             
             if(ticker not in last_seen):
+                print(en-st)
                 print(f"[{datetime.now(timezone.utc)}] new listing")
                 print(f"inside upbit api page listing time : {res["data"]["notices"][0]["listed_at"]}")
                 print("new listing announcement")
