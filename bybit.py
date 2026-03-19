@@ -21,6 +21,7 @@ results = {}
 
 def run_session_continously(symbol):
     st = time.time()
+    print(f"[{datetime.now(timezone.utc)}] inside fetch ticker and fetch instr")
 
     
 
@@ -93,6 +94,8 @@ def place_tp_order(order_id, tp_percent, symbol):
     print(f"Sold {final_qty} {symbol} at {final_price}")
     print("Take profit time:", time.time() - st)
 
+    print(f"[{datetime.now(timezone.utc)}] after take profit time")
+
     
     return response
 
@@ -142,6 +145,7 @@ def get_new_price(e):
 
     # Check if the error is 170193 (Price Limit Protection)
     if "170193" in error_msg:
+        print(f"[{datetime.now(timezone.utc)}] inside error message time")
         print(f"Caught Limit Error: {error_msg}")
 
         # Use regex to find the price in the error string (e.g., "0.1643")
@@ -236,6 +240,7 @@ def place_aggressive_spot_buy(symbol, usdt_amount):
             qty = float(decimal.Decimal(str(usdt_amount / final_buy_price)).quantize(decimal.Decimal(base_precision),rounding=decimal.ROUND_DOWN))
             print(f"new Sending Limit Buy: {qty} @ {final_buy_price} (Buffer: {safe_ratio * 100}%)")
             buy_order=session.place_order(category="spot",symbol=symbol,side="Buy",orderType="Limit",qty=str(qty),price=str(final_buy_price),timeInForce="IOC")
+    print(f"[{datetime.now(timezone.utc)}] after buy order time")
             
             
         
