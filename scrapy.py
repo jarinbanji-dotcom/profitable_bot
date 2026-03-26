@@ -5,10 +5,10 @@ from datetime import datetime, timezone
 from curl_cffi import requests
 
 # 1. REPLACE THESE WITH YOUR WEBSHARE DETAILS
-PROXY_USER = "wcwfyxnx"
-PROXY_PASS = "lcbzz4s5m706"
-PROXY_IP = "64.137.96.74"
-PROXY_PORT = "6641"
+PROXY_USER = "pjmqkwnt"
+PROXY_PASS = "1wct0d2sg0r5"
+PROXY_IP = "198.105.121.200"
+PROXY_PORT = "6462"
 #6540,6543,6837,6754,6114 , 6641,6014=6461=6462 , 6641
 
 #6014 : 45.38.107.97 (0.2s)
@@ -41,7 +41,7 @@ def fast_fetch():
     
 
 
-last_seen=["ETHFI","EDGE","ICP","SENT","CFG","ESP","SKR","AZTEC","TAO","BIRB"]
+last_seen=["KAT","ETHFI","EDGE","ICP","SENT","CFG","ESP","SKR","AZTEC","TAO","BIRB"]
 
 def connect_bybit(ticker):
     print("ticker is :", ticker)
@@ -68,6 +68,7 @@ while(True):
     
     res=fast_fetch()
     en=time.time()
+    print(en-st)
     
     title=res["data"]["notices"][0]["title"]
     
