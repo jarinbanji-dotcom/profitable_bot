@@ -36,7 +36,6 @@ def fast_fetch():
     # Subsequent calls using the same session are MUCH faster
     # because the TLS handshake is already done.
     response = session.get(url, impersonate="chrome")
-    print(response)
     return response.json()
     
 
@@ -68,7 +67,6 @@ while(True):
     
     res=fast_fetch()
     en=time.time()
-    print(en-st)
     
     title=res["data"]["notices"][0]["title"]
     
