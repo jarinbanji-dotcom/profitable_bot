@@ -67,7 +67,6 @@ while(True):
     
     res=fast_fetch()
     en=time.time()
-    print(en-st)
     
     title=res["data"]["notices"][0]["title"]
     
