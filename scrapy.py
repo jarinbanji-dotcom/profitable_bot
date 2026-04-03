@@ -5,8 +5,8 @@ from datetime import datetime, timezone
 from curl_cffi import requests
 
 # 1. REPLACE THESE WITH YOUR WEBSHARE DETAILS
-PROXY_USER = "pjmqkwnt"
-PROXY_PASS = "1wct0d2sg0r5"
+PROXY_USER = "ylxgooez"
+PROXY_PASS = "hq8py4u2ftdg"
 PROXY_IP = "31.59.20.176"
 PROXY_PORT = "6754"
 #6540,6543,6837,6754,6114 , 6641,6014=6461=6462 , 6641
@@ -67,6 +67,7 @@ while(True):
     
     res=fast_fetch()
     en=time.time()
+    print(en-st)
     
     title=res["data"]["notices"][0]["title"]
     
