@@ -7,8 +7,8 @@ from curl_cffi import requests
 # 1. REPLACE THESE WITH YOUR WEBSHARE DETAILS
 PROXY_USER = "pjmqkwnt"
 PROXY_PASS = "1wct0d2sg0r5"
-PROXY_IP = "185.226.205.175"
-PROXY_PORT = "5707"
+PROXY_IP = "31.59.33.66"
+PROXY_PORT = "6642"
 #6540,6543,6837,6754,6114 , 6641,6014=6461=6462 , 6641
 
 #6642 :0.4s , 5814
@@ -64,7 +64,7 @@ def connect_bybit(ticker):
     print("total time taken : ", en - st)
 i=0
 while(True):
-    time.sleep(0.1)
+    time.sleep(0.05)
     st=time.time()
     
     res=fast_fetch()
@@ -72,7 +72,6 @@ while(True):
     
     title=res["data"]["notices"][0]["title"]
 
-    print(title)
     print(en-st)
     
     if("Market Support for" in title and "Termination" not in title and "KRW" in title):
