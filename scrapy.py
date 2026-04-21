@@ -42,7 +42,7 @@ def fast_fetch():
     
 
 
-last_seen=["KAT","ETHFI","EDGE","ICP","SENT","CFG","ESP","SKR","AZTEC","TAO","BIRB"]
+last_seen=["KAT","ZAMA","SOON","CHIP","PIEVERSE","KAT","ETHFI","EDGE","ICP","SENT","CFG","ESP","SKR","AZTEC","TAO","BIRB"]
 
 def connect_bybit(ticker):
     print("ticker is :", ticker)
@@ -72,7 +72,6 @@ while(True):
     
     title=res["data"]["notices"][0]["title"]
 
-    print(en-st)
     
     if("Market Support for" in title and "Termination" not in title and "KRW" in title):
         
