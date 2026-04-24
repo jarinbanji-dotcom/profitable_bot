@@ -71,10 +71,17 @@ while(True):
     en=time.time()
     
     title=res["data"]["notices"][0]["title"]
+    title_up = title.upper()
+    is_listing = any(x in title_up for x in [
+    "MARKET SUPPORT", 
+    "디지털 자산 추가", 
+    "신규 거래지원"])
+
+    is_not_noise = all(x not in title_up for x in [
+    "TERMINATION", "WARNING", "CAUTION", "LIFTED", "유의", "거래지원 종료"])
 
     
-    if("Market Support for" in title and "Termination" not in title and "KRW" in title):
-        
+    if is_listing and is_not_noise and "KRW" in title_up:
         
         start = title.find("(")
         end = title.find(")")
