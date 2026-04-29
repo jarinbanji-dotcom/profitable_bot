@@ -136,7 +136,10 @@ import decimal
 
 def get_bal(token):
     res = session.get_wallet_balance(accountType="UNIFIED", coin=token)
-    return float(res['result']['list'][0]['coin'][0]['walletBalance'])
+    toki=res['result']['list'][0]['coin'][0]['walletBalance']
+    if(toki==""):
+        return 0.0
+    return float(toki)
 
 
 def get_new_price(e):
@@ -243,7 +246,7 @@ def place_aggressive_spot_buy(symbol, usdt_amount):
             print("final buy price : ",final_buy_price)
             qty = float(decimal.Decimal(str(usdt_amount / final_buy_price)).quantize(decimal.Decimal(base_precision),rounding=decimal.ROUND_DOWN))
             print(f"new Sending Limit Buy: {qty} @ {final_buy_price} (Buffer: {safe_ratio * 100}%)")
-            buy_order=session.place_order(category="spot",symbol=symbol,side="Buy",orderType="Limit",qty=str(qty),price=str(final_buy_price),timeInForce="IOC")
+            buy_order=session.place_order(category="spot",symbol=symbol,side="Buy",orderType="Limit",qty=str(qty),price=str(final_buy_price),timeInForce="GTC")
     print(f"[{datetime.now(timezone.utc)}] after buy order time")
             
             
