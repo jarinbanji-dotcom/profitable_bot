@@ -10,8 +10,8 @@ from pybit.unified_trading import HTTP
 # Use testnet=True for demo trading; set to False for real trading
 session = HTTP(
     testnet=False,
-    api_key="nrk5LoL4OsGXVetTgZ",
-    api_secret="F9YtDDwUeAAgTzhAKwAl3h1u7XoqAKAMx6bP"
+    api_key="15a3WmqVLgMc3h8NWp",
+    api_secret="4Z8YPBtJlO0uEgB4YFoH65k4CsvBMy0X0nxa"
 )
 
 import math
