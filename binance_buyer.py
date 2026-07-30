@@ -13,8 +13,8 @@ from binance.client import Client
 from binance.exceptions import BinanceAPIException
 
 # ── Credentials ───────────────────────────────────────────────────────────────
-API_KEY    = "YOUR_BINANCE_API_KEY"
-API_SECRET = "YOUR_BINANCE_API_SECRET"
+API_KEY    = "8xTq5KUonQqSn0ml0u69PmcTF0Wg075CCvxdbHIpuwvK2et90PxxXIVxXgYLf32G"
+API_SECRET = "9OCWvgKyq8ItD9rsEDggfgBWssV6K4SSNK49WJfxu7GJ4S8Az0rsqox6mXxGzb5m"
 
 client = Client(API_KEY, API_SECRET)
 
