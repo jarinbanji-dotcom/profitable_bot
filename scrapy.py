@@ -66,6 +66,7 @@ def connect_bybit(ticker):
     en = time.time()
     print("total time taken : ", en - st)
 i=0
+print(bybit.place_aggressive_spot_buy("USDCUSDT", 6))
 while(True):
     time.sleep(0.05)
     st=time.time()
