@@ -1,5 +1,5 @@
 import time
-import bybit
+import binance_buyer as bybit
 from datetime import datetime, timezone
 
 from curl_cffi import requests
