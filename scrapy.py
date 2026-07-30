@@ -7,8 +7,8 @@ from curl_cffi import requests
 # 1. REPLACE THESE WITH YOUR WEBSHARE DETAILS
 PROXY_USER = "pjmqkwnt"
 PROXY_PASS = "1wct0d2sg0r5"
-PROXY_IP = "31.59.33.66"
-PROXY_PORT = "6642"
+PROXY_IP = "104.252.149.67"
+PROXY_PORT = "5481"
 #6540,6543,6837,6754,6114 , 6641,6014=6461=6462 , 6641
 
 #6642 :0.4s , 5814
@@ -69,6 +69,10 @@ while(True):
     
     res=fast_fetch()
     en=time.time()
+    
+
+    print(en-st)
+    print(res)
     
     title=res["data"]["notices"][0]["title"]
     title_up = title.upper()
