@@ -74,8 +74,6 @@ while(True):
     en=time.time()
     
 
-    print(en-st)
-    print(res)
     
     title=res["data"]["notices"][0]["title"]
     title_up = title.upper()
