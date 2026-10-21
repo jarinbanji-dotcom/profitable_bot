@@ -1,14 +1,16 @@
 import time
-import binance_buyer as bybit
+import os
+import threading
+import bybit
 from datetime import datetime, timezone
 
 from curl_cffi import requests
 
-# 1. REPLACE THESE WITH YOUR WEBSHARE DETAILS
-PROXY_USER = "pjmqkwnt"
-PROXY_PASS = "1wct0d2sg0r5"
-PROXY_IP = "92.113.236.99"
-PROXY_PORT = "6684"
+# 1. Webshare details come from environment variables — never hardcode them
+PROXY_USER = os.environ["PROXY_USER"]
+PROXY_PASS = os.environ["PROXY_PASS"]
+PROXY_IP = os.environ.get("PROXY_IP", "92.113.236.99")
+PROXY_PORT = os.environ.get("PROXY_PORT", "6684")
 #6540,6543,6837,6754,6114 , 6641,6014=6461=6462 , 6641
 """
 PROXY_IP = "92.113.236.99"
@@ -22,7 +24,7 @@ PROXY_PORT = "6684"
 #
 # 2. Create the proxy dictionary
 proxy_url = f"http://{PROXY_USER}:{PROXY_PASS}@{PROXY_IP}:{PROXY_PORT}"
-print(proxy_url)
+print(f"proxy: {PROXY_IP}:{PROXY_PORT}")  # don't print the password
 
 proxies = {
     "http": proxy_url,
@@ -65,12 +67,30 @@ def connect_bybit(ticker):
             print(f"Attempt {i + 1} failed. Error: {e}")
     en = time.time()
     print("total time taken : ", en - st)
-i=0
+
+
+# Keep the Bybit connection warm in the background, NOT inside the poll loop.
+# Uses get_server_time (doesn't touch bybit.results, so it can't corrupt a buy in progress).
+def keep_bybit_warm():
+    while True:
+        try:
+            bybit.session.get_server_time()
+        except Exception as e:
+            print(f"[{datetime.now(timezone.utc)}] keep-alive error: {e}")
+        time.sleep(10)
+
+threading.Thread(target=keep_bybit_warm, daemon=True).start()
+
 while(True):
     time.sleep(0.05)
     st=time.time()
-    
-    res=fast_fetch()
+
+    try:
+        res=fast_fetch()
+    except Exception as e:
+        # one bad response must not kill the bot
+        print(f"[{datetime.now(timezone.utc)}] fetch error: {e}")
+        continue
     en=time.time()
     
 
@@ -103,15 +123,6 @@ while(True):
                 print("heyya")
                 last_seen.append(ticker)
                 connect_bybit(ticker)
-    elif(i==0):
-        st=time.time()
-        bybit.run_session_continously("ETHUSDT")
-        en=time.time()
-        i=1
-    elif(i==1):
-        i=2
-    elif(i==2):
-        i=0
         
     
         
@@ -125,17 +136,3 @@ while(True):
 
 
     en=time.time()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
