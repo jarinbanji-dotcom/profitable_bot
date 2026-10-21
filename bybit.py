@@ -1,6 +1,7 @@
 from datetime import datetime, timezone
 import time
 import re
+import os
 import threading
 
 from pybit.unified_trading import HTTP
@@ -8,11 +9,23 @@ from pybit.unified_trading import HTTP
 
 # 1. Initialize the session
 # Use testnet=True for demo trading; set to False for real trading
+# Keys come from environment variables (set BYBIT_API_KEY / BYBIT_API_SECRET) — never hardcode them
 session = HTTP(
     testnet=False,
-    api_key="15a3WmqVLgMc3h8NWp",
-    api_secret="4Z8YPBtJlO0uEgB4YFoH65k4CsvBMy0X0nxa"
+    api_key=os.environ["BYBIT_API_KEY"],
+    api_secret=os.environ["BYBIT_API_SECRET"]
 )
+
+
+def get_filled_qty(order_id, tries=5, wait=0.15):
+    # IOC orders are final immediately, but history can take a moment to show them
+    for _ in range(tries):
+        hist = session.get_order_history(category="spot", orderId=order_id)
+        lst = hist['result']['list']
+        if lst:
+            return float(lst[0]['cumExecQty'] or 0)
+        time.sleep(wait)
+    raise RuntimeError(f"order {order_id} not found in history")
 
 import math
 
@@ -204,10 +217,10 @@ def place_aggressive_spot_buy(symbol, usdt_amount):
     if(ratio_x>0.05):
         ratio_x=0.05
     print("x ratio : ",ratio_x)
-    safe_ratio = ratio_x*1.2
+    # Stay just UNDER the price-limit cap so the first order is accepted
+    # (1.2x pushed it over the cap -> 170193 reject -> extra round trip every time)
+    safe_ratio = ratio_x*0.95
     print("safe_ratio : ",safe_ratio)
-
-    safe_ratio: 0.00001
 
     # 3. Calculate Target Price (Market + 4%)
     target_price = last_price * (1 + safe_ratio)
@@ -241,7 +254,7 @@ def place_aggressive_spot_buy(symbol, usdt_amount):
             orderType="Limit",
             qty=str(qty),
             price=str(final_buy_price),
-            timeInForce="GTC"
+            timeInForce="IOC"
         )
     except Exception as e:
         print("inside exeption")
@@ -252,7 +265,9 @@ def place_aggressive_spot_buy(symbol, usdt_amount):
             print("final buy price : ",final_buy_price)
             qty = float(decimal.Decimal(str(usdt_amount / final_buy_price)).quantize(decimal.Decimal(base_precision),rounding=decimal.ROUND_DOWN))
             print(f"new Sending Limit Buy: {qty} @ {final_buy_price} (Buffer: {safe_ratio * 100}%)")
-            buy_order=session.place_order(category="spot",symbol=symbol,side="Buy",orderType="Limit",qty=str(qty),price=str(final_buy_price),timeInForce="GTC")
+            buy_order=session.place_order(category="spot",symbol=symbol,side="Buy",orderType="Limit",qty=str(qty),price=str(final_buy_price),timeInForce="IOC")
+        else:
+            raise  # not a price-limit error -> nothing was placed, safe for caller to retry
     print(f"[{datetime.now(timezone.utc)}] after buy order time")
             
             
@@ -265,28 +280,24 @@ def place_aggressive_spot_buy(symbol, usdt_amount):
     print("buy order id : ",orderid)
     tp_percent = 0.1 # 10%
 
+    # From here an order EXISTS. Only "IOC filled nothing" may raise (safe to retry).
+    # Anything else returns, so the caller can never buy twice.
     st=time.time()
-    token=symbol[:-4]
-    print(token)
-    time.sleep(0.1)
-    token_bal = get_bal(token)
-    print(token_bal)
-    
-    if(token_bal<0.01):
-        response = session.cancel_order(
-            category="spot",
-            symbol=symbol,
-            orderId=orderid
-        )
-        raise RuntimeError("Order failed")
-    en=time.time()
-    print(en-st)
+    try:
+        filled_qty = get_filled_qty(orderid)
+    except Exception as e:
+        print(f"!! could not confirm fill for {orderid}, NOT retrying — check manually: {e}")
+        return orderid
+    print("filled qty :", filled_qty, " check time :", time.time()-st)
 
-    time.sleep(0.9)
+    if filled_qty <= 0:
+        raise RuntimeError("IOC got no fill")  # nothing bought, nothing resting
 
-
-
-    print(place_tp_order(orderid,tp_percent,symbol))
+    try:
+        print(place_tp_order(orderid,tp_percent,symbol))
+    except Exception as e:
+        print(f"!! bought but TP order failed — place TP manually: {e}")
+    return orderid
 
 
 
@@ -343,21 +354,3 @@ print("step size : ", price_tick)
 print("qty step", qty_step)
 print("tp price : ", tp_price_raw)
 """
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
